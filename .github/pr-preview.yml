@@ -1,0 +1,26 @@
+app:
+  domain: preview.vorre.dev
+
+ingress:
+  tls: true
+  class: nginx
+
+label: preview
+
+services:
+  - name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    port: 8080
+    public: true
+    subdomain: "pr-{number}"
+    replicas: 1
+    resources:
+      limits:
+        cpu: "250m"
+        memory: "128Mi"
+    env:
+      - name: PORT
+        value: "8080"
+    dependsOn: []
