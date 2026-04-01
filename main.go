@@ -9,7 +9,7 @@ import (
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = "3000"
 	}
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -70,3 +70,4 @@ func main() {
 	fmt.Printf("Trainyard demo running on :%s\n", port)
 	http.ListenAndServe(":"+port, nil)
 }
+// test
