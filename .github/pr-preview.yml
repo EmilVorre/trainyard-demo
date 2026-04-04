@@ -1,14 +1,14 @@
 app:
   domain: preview.vorre.dev
- 
+
 ingress:
   tls: true
   class: nginx
- 
+
 label: preview
- 
+
 services:
-  - name: demo-multi-service
+  - name: app
     build:
       context: demo-multi-service
       dockerfile: demo-multi-service/Dockerfile
@@ -31,9 +31,8 @@ services:
         value: "trainyard"
       - name: DJANGO_SECRET_KEY
         value: "trainyard-preview-secret"
-    dependsOn:
-      - migrate
- 
+    dependsOn: []
+
   - name: db
     image: postgres:16-alpine
     port: 5432
@@ -51,7 +50,7 @@ services:
       - name: POSTGRES_PASSWORD
         value: "trainyard"
     dependsOn: []
- 
+
 jobs:
   - name: migrate
     build:
@@ -69,5 +68,6 @@ jobs:
       - name: DJANGO_SECRET_KEY
         value: "trainyard-preview-secret"
     dependsOn:
-      - db
- 
+      - service: db
+        port: 5432
+        
