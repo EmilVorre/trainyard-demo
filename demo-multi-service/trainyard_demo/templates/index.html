@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trainyard Demo</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: #0d1117;
+      color: #c9d1d9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .card {
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 2rem 3rem;
+      text-align: center;
+      max-width: 540px;
+      width: 100%;
+    }
+    h1 { color: #58a6ff; font-size: 2rem; margin-bottom: 0.25rem; }
+    .tag {
+      display: inline-block;
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 4px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.85rem;
+      margin: 0.2rem;
+    }
+    .green { color: #3fb950; }
+    .red { color: #f85149; }
+    .muted { color: #8b949e; font-size: 0.8rem; }
+    hr { border-color: #30363d; margin: 1.5rem 0; }
+    .section-label {
+      color: #8b949e;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .db-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      text-align: left;
+    }
+    .db-key { color: #8b949e; font-size: 0.8rem; }
+    .db-val { font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Trainyard</h1>
+    <p class="green">Preview environment is live</p>
+    <p>This environment was automatically deployed by Trainyard when the <span class="tag">preview</span> label was applied to the pull request.</p>
+
+    <hr/>
+
+    <p><span class="tag">host: {{ hostname }}</span></p>
+
+    <hr/>
+
+    <div class="section-label">Database</div>
+
+    {% if db_error %}
+      <p class="red">Could not connect to database</p>
+      <p class="muted">{{ db_error }}</p>
+    {% else %}
+      <p class="green">Connected</p>
+      <div class="db-grid">
+        <span class="db-key">version</span>
+        <span class="db-val">{{ db_version }}</span>
+
+        {% if deployment_info %}
+          <span class="db-key">framework</span>
+          <span class="db-val">{{ deployment_info.framework }}</span>
+
+          <span class="db-key">database</span>
+          <span class="db-val">{{ deployment_info.database }}</span>
+
+          <span class="db-key">note</span>
+          <span class="db-val">{{ deployment_info.note }}</span>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <hr/>
+
+    <p class="muted">It will be torn down when the label is removed or the PR is closed.</p>
+  </div>
+</body>
+</html>
