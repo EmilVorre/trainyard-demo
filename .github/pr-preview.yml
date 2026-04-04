@@ -11,7 +11,7 @@ services:
   - name: demo-multi-service
     build:
       context: demo-multi-service
-      dockerfile: Dockerfile
+      dockerfile: demo-multi-service/Dockerfile
     port: 8080
     public: true
     subdomain: "pr-{number}"
@@ -56,7 +56,7 @@ jobs:
   - name: migrate
     build:
       context: demo-multi-service
-      dockerfile: Dockerfile.migrate
+      dockerfile: demo-multi-service/Dockerfile.migrate
     env:
       - name: POSTGRES_HOST
         value: "db"
